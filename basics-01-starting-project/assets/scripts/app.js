@@ -23,36 +23,53 @@ function createAndWriteOutpu (operator, resultBefore, calcNumber) {
     outputResult(currentResult, calcDescription);
 }
 
-function add() {
+function calculateResult (calculationType) {
     const enteredNumber = getUserNumberInput();
+    if (
+        calculationType !== 'ADD' &&
+        calculationType !== 'SUBSTRACT' &&
+        calculationType !== 'MULTIPLY' &&
+        calculationType !== 'DEVIDE' ||
+        !enteredNumber
+        ) {
+            return;
+        }
     const initalResult = currentResult;
-    currentResult += enteredNumber;
-    createAndWriteOutpu('+', initalResult, enteredNumber);
-    wtireToLog('ADD', initalResult, enteredNumber, currentResult);
+    let matchOperator;
+        if (calculationType === 'ADD') {
+            matchOperator = '+';
+            currentResult += enteredNumber;
+        } else if (calculationType === 'SUBSTRACT') {
+            matchOperator = '-';
+            currentResult -= enteredNumber;
+        } else if (calculationType === 'MULTIPLY') {
+            matchOperator = '*';
+            currentResult *= enteredNumber;
+        } else if (calculationType === 'DEVIDE') {
+            matchOperator = '/';
+            currentResult /= enteredNumber;
+        }
+
+
+    createAndWriteOutpu(matchOperator, initalResult, enteredNumber);
+    wtireToLog(calculationType, initalResult, enteredNumber, currentResult);
+}
+
+
+function add() {
+    calculateResult('ADD');
 }
 
 function substract() {
-    const enteredNumber = getUserNumberInput();
-    const initalResult = currentResult;
-    currentResult -= enteredNumber;
-    createAndWriteOutpu('-', initalResult, enteredNumber);
-    wtireToLog('SUBSTRACT', initalResult, enteredNumber, currentResult);
+    calculateResult('SUBSTRACT');
 }
 
 function multiply() {
-    const enteredNumber = getUserNumberInput();
-    const initalResult = currentResult;
-    currentResult *= enteredNumber;
-    createAndWriteOutpu('*', initalResult, enteredNumber);
-    wtireToLog('MULTIPLY', initalResult, enteredNumber, currentResult);
+    calculateResult('MULTIPLY');
 }
 
 function divide() {
-    const enteredNumber = getUserNumberInput();
-    const initalResult = currentResult;
-    currentResult /= enteredNumber;
-    createAndWriteOutpu('/', initalResult, enteredNumber);
-    wtireToLog('DEVIDE', initalResult, enteredNumber, currentResult);
+    calculateResult('DEVIDE');
 }
 
 addBtn.addEventListener('click', add);
