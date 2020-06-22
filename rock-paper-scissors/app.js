@@ -10,7 +10,7 @@ const RESULT_COMPUTER_WINS = 'COMPUTER_WIN';
 
 let runningGame = false;
 
-const getPayerChoice = function  () {
+const getPayerChoice = () => {
     const playerChoice = prompt(`Choice ${ROCK}, ${PAPER} or ${SCISSORS}`,'').toUpperCase();
     if (playerChoice !== ROCK &&
         playerChoice !== PAPER &&
@@ -22,7 +22,7 @@ const getPayerChoice = function  () {
         return playerChoice;
 };
 
-const getComputerChoice = function () {
+const getComputerChoice = () => {
     const randomValue = Math.random();
     if (randomValue < 0.34) {
         return ROCK;
@@ -33,7 +33,7 @@ const getComputerChoice = function () {
     }
 };
 
-const getWinner = function (cChoice, pChoice){
+const getWinner = (cChoice, pChoice) => {
     if(cChoice === pChoice) {
         return RESULT_DRAW;
     } else if (cChoice === ROCK && pChoice === PAPER ||
@@ -46,7 +46,7 @@ const getWinner = function (cChoice, pChoice){
         }
 };
 
-startGameBtn.addEventListener('click', function() {
+startGameBtn.addEventListener('click', () => {
     if(runningGame){
         return;
     }
@@ -54,5 +54,14 @@ startGameBtn.addEventListener('click', function() {
     const playerChoise = getPayerChoice();
     const computerCoice = getComputerChoice();
     const winner = getWinner(computerCoice, playerChoise);
-    console.log(winner);
+    let massage = `You picked ${playerChoise}, computer picked ${computerCoice}, therefore you `;
+    if (winner === RESULT_DRAW) {
+        massage = massage + 'had a draw.';
+    } else if (winner === RESULT_PLAYER_WINS) {
+        massage = massage + 'won.';
+    } else {
+        massage = massage + 'lost.';
+    }
+    alert(massage);
+    runningGame = false;
 });
